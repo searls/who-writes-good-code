@@ -14,7 +14,7 @@
 module.exports = (lineman) ->
 
   #Override application configuration here. Common examples follow in the comments.
-  enableSass: true
+  {}
 
 # API Proxying
 #

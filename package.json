@@ -6,17 +6,15 @@
   "author": "John Doe",
   "scripts": {
     "start": "lineman run",
-    "production": "lineman build && npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(80)\"",
+    "production": "lineman clean build && npm i express@3 && node -e \"var e = require('express'), a = e(); a.use(e.static('dist/')); a.listen(process.env.PORT)\"",
     "test": "lineman spec-ci"
   },
   "devDependencies": {
-    "lineman": "~0.35.0"
+    "lineman": "~0.35.0",
+    "lineman-less": "^0.1.0"
   },
   "engines": {
-    "node": "0.10.21"
-  },
-  "dependencies": {
-    "lineman": "^0.35.0",
-    "lineman-less": "^0.1.0"
+    "node": "0.10.x"
   }
+
 }
