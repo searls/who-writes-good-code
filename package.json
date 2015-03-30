@@ -10,7 +10,7 @@
     "test": "lineman spec-ci"
   },
   "devDependencies": {
-    "lineman": "~0.35.0",
+    "lineman": "~0.36",
     "lineman-less": "^0.1.0"
   },
   "engines": {
