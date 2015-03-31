@@ -10,11 +10,11 @@
     "test": "lineman spec-ci"
   },
   "devDependencies": {
+    "grunt-sass": "^0.18.1",
     "lineman": "~0.36",
     "lineman-less": "^0.1.0"
   },
   "engines": {
     "node": "0.10.x"
   }
-
 }
