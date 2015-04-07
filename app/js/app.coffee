@@ -1,5 +1,5 @@
 $ ->
-  github = githubQuery()
+  github = githubQuery() || ""
   render('search', {github})
   render('results', {github}) if github
 
