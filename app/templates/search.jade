@@ -1,5 +1,6 @@
 .container
-  .input-border
-    .input-container
+  .input-container
+    .input-border
+    .input-content(data-js-results)
       form
-        input(type="search" name="github" value="#{github}" placeholder="Github User Name")
+        input(type="text" name="github" value="#{github}" placeholder="Github User Name" autocomplete="off" data-js-input)
