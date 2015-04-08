@@ -1,6 +1,8 @@
 $ ->
   $search = renderSearch()
   captureFormSubmit($search, renderResults)
+  handleResize()
+  $(window).on('resize', handleResize)
 
 
 captureFormSubmit = ($search, cb) ->
@@ -31,3 +33,8 @@ showAndHidePlaceholder = ->
 
   $input.on 'focus', -> $input.attr('placeholder', '')
   $input.on 'blur', -> $input.attr('placeholder', ogPlaceholder)
+
+handleResize = ->
+  docHeight = $(window).height()
+  containerHeight = $('.container').outerHeight() + 190
+  $('.container').toggleClass('is-too-big', docHeight < containerHeight)

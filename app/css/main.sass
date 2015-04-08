@@ -12,25 +12,33 @@ $white: white
 
 body, html
   padding: 0
+    top: 50px
+    bottom: 50px
   margin: 0
-  +size(100%)
-  min-height: 100%
-  min-width: 100%
+  font:
+    family: $primary-font
+
+  *
+    box-sizing: border-box
 
 .container
   +centerer
-  width: 96%
-  max-width: 960px
-  margin: auto
+  width: 90%
+  max-width: 600px
+
+  &.is-too-big
+    +transform(translate(0, 0))
+    position: static
+    margin: auto
 
 .input-container
   position: relative
   padding: 1px
 
 .input-border
+  +transition(background 1s)
   +position(absolute, 0 0 0 0)
   +linear-gradient($dark, $dark)
-  // +linear-gradient($dark, $white)
   z-index: 0
   border-radius: 4px
 
@@ -45,6 +53,9 @@ body, html
 
   &.visible
     max-height: 1000px
+
+    & ~ .input-border
+      +linear-gradient($dark, $white)
 
 input
   +size(100% 98px)
@@ -62,6 +73,74 @@ input
     color: $dark
 
 .results-container
-  height: 600px
-  width: 100%
-  background: pink
+  padding: 32px
+    top: 0
+  font:
+    size: 28px
+    weight: 300
+
+.line-item
+  +clearfix
+  position: relative
+  margin:
+    bottom: 48px
+
+  &:last-child
+    margin:
+      bottom: 0
+
+  @for $i from 1 through 5
+    &:nth-child(#{$i}) .line-item-percentage-amount
+      +transition-delay(#{$i * .1}s)
+
+.line-item-title
+  float: left
+
+.line-item-percentage
+  position: absolute
+  bottom: 0
+  height: 1px
+  background: lighten($dark, 25%)
+  +calc(width, "100% - 80px")
+
+.line-item-percentage-amount
+  +transition(width 1s)
+  +position(absolute, 0 null null 0)
+  height: 1px
+  background: $green
+  width: 100px
+
+.line-item-grade
+  float: right
+  text-align: center
+  padding:
+    top: 10px
+  font:
+    size: 34px
+    family: 'Helvetica'
+
+    weight: 700
+  +size(50px)
+  border: 1px solid $dark
+    radius: 50%
+
+.overall-grade
+  position: absolute
+  z-index: 2
+  top: -75px
+  left: 50%
+  +transform(translate(-50%))
+  +size(100px)
+  background: black
+  border-radius: 50%
+
+.overall-grade-letter
+  position: relative
+  top: 17px
+  right: 0px
+  color: $green
+  text-align: center
+  font:
+    size: 78px
+    family: 'Helvetica'
+    weight: 700
