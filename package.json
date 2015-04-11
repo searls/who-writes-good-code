@@ -14,8 +14,7 @@
     "grunt-contrib-jade": "^0.14.1",
     "grunt-sass": "^0.18.1",
     "lineman": "~0.36",
-    "lineman-jade": "^0.1.2",
-    "lineman-less": "^0.1.0"
+    "lineman-jade": "^0.1.2"
   },
   "engines": {
     "node": "0.10.x"
