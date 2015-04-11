@@ -2,7 +2,10 @@
 
 captureFormSubmit = ($search, cb) ->
   $('form').on 'submit', ->
-    cb($search, github: $('input').val())
+    $('[data-js-results-marker]').removeClass('results-ready')
+    setTimeout ->
+      cb($search, github: $('input').val())
+    , 1750
     false
 
 renderSearch = (github = githubQuery()) ->
@@ -14,7 +17,7 @@ renderSearch = (github = githubQuery()) ->
 githubQuery = ->
   new URI(window.location.href).search(true)['github'] || ""
 
-render = (name, context, container = ".app") ->
+render = (name, context, container = "[data-js-render-root]") ->
   $(container).html(JST["app/templates/#{name}"](context))
 
 showAndHidePlaceholder = ->
@@ -25,15 +28,15 @@ showAndHidePlaceholder = ->
 
 handleResize = ->
   docHeight = $(window).height()
-  containerHeight = $('.container').outerHeight() + 190
-  $('.container').toggleClass('is-too-big', docHeight < containerHeight)
+  containerHeight = $('[data-js-app-root]').outerHeight() + 190
+  $('[data-js-app-root]').toggleClass('is-too-big', docHeight < containerHeight)
 
 ## 2. Results stuff
 
 renderResults = ($search, context) ->
   return unless context.github
   render('results', context, $search.find('[data-js-results]'))
-  $('.input-content').addClass('results-ready')
+  $('[data-js-results-marker]').addClass('results-ready')
 
 
 ## 3. public static void main()
