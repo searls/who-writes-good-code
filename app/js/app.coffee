@@ -2,7 +2,7 @@
 
 captureFormSubmit = ($search, cb) ->
   $('form').on 'submit', ->
-    $('[data-js-results-marker]').removeClass('results-ready')
+    unrenderResults()
     setTimeout ->
       cb($search, github: $('input').val())
     , 1750
@@ -37,8 +37,13 @@ renderResults = ($search, github) ->
   return unless github
   _(calculateResults(github)).tap (results) ->
     render('results', results, $search.find('[data-js-results]'))
-    $('[data-js-overall-grade]').text(results.overall)
+    $('[data-js-overall-grade]').removeClass('invisible')
+    $('[data-js-overall-grade-letter]').text(results.overall)
     $('[data-js-results-marker]').addClass('results-ready')
+
+unrenderResults = ->
+  $('[data-js-overall-grade]').addClass('invisible')
+  $('[data-js-results-marker]').removeClass('results-ready')
 
 calculateResults = (github) ->
   grades = calculateGrades(github)

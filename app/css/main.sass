@@ -4,6 +4,9 @@
   +transform(translate(-50%, -50%))
   +position(absolute, 50% null null 50%)
 
+.invisible
+  opacity: 0
+
 $primary-font: 'Source Sans Pro'
 
 $dark: #231F20
@@ -132,6 +135,7 @@ input
   z-index: 2
   top: -75px
   left: 50%
+  +transition(opacity .7s)
   +transform(translate(-50%))
   +size(100px)
   background: black
