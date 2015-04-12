@@ -47,6 +47,8 @@ renderResults = ($search, github) ->
       $('[data-js-percentage]').each (i, el) ->
         $(el).css(width: "#{results.grades[i].percentage}%")
     , 400
+    setTimeout(handleResize, LOADING_DELAY)
+
 
 unrenderResults = ->
   $('[data-js-overall-grade]').addClass('invisible')
