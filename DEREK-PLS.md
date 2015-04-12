@@ -5,3 +5,4 @@
 
   .line-item-grade
     padding-top: 6px
+* I worry that if someone enters the page off a report card link, there's no CTA to get them to tap the user name and enter their own. Should we add a little X icon by the name? What else can we do?
