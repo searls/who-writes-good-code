@@ -85,8 +85,12 @@ pickCriteria = ->
     "Commit Message Clarity"
   ]).chain().shuffle().first(5).value()
 
+# Any number is possible, but random of randoms to weight it
+# toward higher more common letter grades
 randomPercentage = ->
-  _.random(40, 100)
+  _([0,40,60,70,80,85,90]).chain().map (n) ->
+    _.random(n, 100)
+  .sample().value()
 
 LETTER_GRADES =
   59: "F"
