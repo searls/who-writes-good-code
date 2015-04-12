@@ -1,21 +1,21 @@
 ## 1. Search stuff
 
-captureFormSubmit = ($search, cb) ->
-  $('form').on 'submit', ->
-    unrenderResults()
-    setTimeout ->
-      cb($search, github: $('input').val())
-    , 1750
-    false
+generateReportCardFor = (github) ->
+  unrenderResults()
+  window.location.hash = "##{github}"
+  $('[data-js-search-input]').val(github)
+  setTimeout ->
+    renderResults($('[data-js-app-root]'), github)
+  , 1750
+  false
 
 renderSearch = (github = githubQuery()) ->
-  $search = render('search', {github})
+  render('search', {github})
   showAndHidePlaceholder()
-  renderResults($search, github)
-  $search
+  renderResults($('[data-js-app-root]'), github)
 
 githubQuery = ->
-  new URI(window.location.href).search(true)['github'] || ""
+  _(window.location.hash).rest().join("")
 
 render = (name, context, container = "[data-js-render-root]") ->
   $(container).html(JST["app/templates/#{name}"](context))
@@ -95,7 +95,7 @@ LETTER_GRADES =
   89: "B+"
   93: "A-"
   96: "A"
-  99: "A+"
+  100: "A+"
 
 letterGradeFromPercentage = (percentage) ->
   _(LETTER_GRADES).find (grade, cutoff) ->
@@ -103,7 +103,8 @@ letterGradeFromPercentage = (percentage) ->
 
 ## 3. public static void main()
 $ ->
-  $search = renderSearch()
-  captureFormSubmit($search, renderResults)
+  renderSearch()
   handleResize()
+  $('form').on('submit', -> generateReportCardFor($('[data-js-search-input]').val()))
   $(window).on('resize', handleResize)
+  $(window).on('hashchange', -> generateReportCardFor(githubQuery()))
