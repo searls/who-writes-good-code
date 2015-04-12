@@ -95,7 +95,7 @@ input
     margin:
       bottom: 0
 
-  @for $i from 1 through 5
+  @for $i from 0 through 4
     &:nth-child(#{$i}) .line-item-percentage-amount
       +transition-delay(#{$i * .1}s)
 
@@ -114,7 +114,7 @@ input
   +position(absolute, 0 null null 0)
   height: 1px
   background: $green
-  width: 100px
+  width: 0%
 
 .line-item-grade
   float: right

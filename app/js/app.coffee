@@ -1,12 +1,14 @@
 ## 1. Search stuff
 
+LOADING_DELAY = 1000
+
 generateReportCardFor = (github) ->
   unrenderResults()
   window.location.hash = "##{github}"
   $('[data-js-search-input]').val(github)
   setTimeout ->
     renderResults($('[data-js-app-root]'), github)
-  , 1750
+  , LOADING_DELAY + 750
   false
 
 renderSearch = (github = githubQuery()) ->
@@ -40,6 +42,10 @@ renderResults = ($search, github) ->
     $('[data-js-overall-grade]').removeClass('invisible')
     $('[data-js-overall-grade-letter]').text(results.overall)
     $('[data-js-results-marker]').addClass('results-ready')
+    setTimeout ->
+      $('[data-js-percentage]').each (i, el) ->
+        $(el).css(width: "#{results.grades[i].percentage}%")
+    , 400
 
 unrenderResults = ->
   $('[data-js-overall-grade]').addClass('invisible')
