@@ -74,7 +74,7 @@ localStorageify = (cb) ->
 calculateGrades = localStorageify (github) ->
   _(pickCriteria()).map (name) ->
     name: name
-    percentage: percentage = randomPercentage()
+    percentage: percentage = randomPercentage(randomWeightingsFor(github))
     letter: letterGradeFromPercentage(percentage)
 
 
@@ -87,11 +87,25 @@ pickCriteria = ->
     "Conscientious Logging",
     "Commit Message Clarity"
   ]).chain().shuffle().first(5).value()
+# How this works:
+# The randomPercentage function takes an array of minimum values relative to
+#   a max of 100(%). So if you return [0, 50], then two random values will be
+#   calculated, one from 0-100 and one from 50-100, then of those two, one will
+#   be randomly chosen. That means you'd be twice as likely to draw a 75 than a
+#   25. This is useful b/c truly random 0-100 grades don't look like normal grades
+#   at all thanks to the perceived floor of 30-45% and typical grade inflation.
+#   Users would feel like the tool was unrealistic if it spat out D- averages for
+#   most people.
+#
+#  Oh and don't mind the thing about A+ students. Nothing to see here.
+randomWeightingsFor = (github) ->
+  if _(A_PLUS_STUDENTS).include(github)
+    [96, 98]
+  else
+    [0,40,60,70,80,85,90]
 
-# Any number is possible, but random of randoms to weight it
-# toward higher more common letter grades
-randomPercentage = ->
-  _([0,40,60,70,80,85,90]).chain().map (n) ->
+randomPercentage = (weightings = [0]) ->
+  _(weightings).chain().map (n) ->
     _.random(n, 100)
   .sample().value()
 
@@ -109,6 +123,24 @@ LETTER_GRADES =
   93: "A-"
   96: "A"
   100: "A+"
+
+A_PLUS_STUDENTS = [
+  "pixeljanitor"
+  "bkeepers"
+  "tkaufman"
+  "searls"
+  "jasonkarns"
+  "andrewvida"
+  "theotherzach"
+  "bostonaholic"
+  "davemo"
+  "neall"
+  "kbaribeau"
+  "danthompson"
+  "crebma"
+  "dustintinney"
+]
+
 
 letterGradeFromPercentage = (percentage) ->
   _(LETTER_GRADES).find (grade, cutoff) ->
