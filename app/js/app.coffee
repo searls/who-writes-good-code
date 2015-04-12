@@ -78,7 +78,7 @@ calculateGrades = localStorageify (github) ->
 
 pickCriteria = ->
   _([
-    "Thoughtfulness of Naming",
+    "Thoughtfulness of Names",
     "Expressiveness of Tests",
     "Empathy for Maintainers",
     "Future-proof Avoidance",
