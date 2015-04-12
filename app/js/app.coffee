@@ -37,6 +37,7 @@ handleResize = ->
 
 renderResults = ($search, github) ->
   return unless github
+  $('[data-js-search-input]').blur()
   _(calculateResults(github)).tap (results) ->
     render('results', results, $search.find('[data-js-results]'))
     $('[data-js-overall-grade]').removeClass('invisible')
