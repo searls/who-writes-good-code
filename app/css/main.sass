@@ -151,6 +151,22 @@ input
     family: 'Helvetica'
     weight: 700
 
+footer
+  margin-top: 80px
+
+  &.invisible
+    display: none
+
+
+  .byline
+    color: lighten($dark, 50%)
+
+    a
+      color: darken($green, 20%)
+      text-decoration: none
+
+      &:hover
+        color: $green
 
 @media only screen and (max-width: 400px)
   .results-container

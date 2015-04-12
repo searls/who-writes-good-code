@@ -40,7 +40,7 @@ renderResults = ($search, github) ->
   $('[data-js-search-input]').blur()
   _(calculateResults(github)).tap (results) ->
     render('results', results, $search.find('[data-js-results]'))
-    $('[data-js-overall-grade]').removeClass('invisible')
+    $('[data-js-results-only]').removeClass('invisible')
     $('[data-js-overall-grade-letter]').text(results.overall)
     $('[data-js-results-marker]').addClass('results-ready')
     setTimeout ->
@@ -51,7 +51,7 @@ renderResults = ($search, github) ->
 
 
 unrenderResults = ->
-  $('[data-js-overall-grade]').addClass('invisible')
+  $('[data-js-results-only]').addClass('invisible')
   $('[data-js-results-marker]').removeClass('results-ready')
 
 calculateResults = (github) ->

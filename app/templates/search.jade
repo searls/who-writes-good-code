@@ -1,9 +1,14 @@
 .container(data-js-app-root)
   .input-container
-    .overall-grade.invisible(data-js-overall-grade)
+    .overall-grade.invisible(data-js-results-only)
       .overall-grade-letter(data-js-overall-grade-letter)
     .input-content(data-js-results-marker)
       form
         input(type="text" name="github" value="#{github}" data-js-search-input placeholder="Github User Name" autocomplete="off" data-js-input)
       div(data-js-results)
     .input-border
+
+  footer.invisible(data-js-results-only)
+    .byline.
+      Lovingly (and satirically) created by your friends at <a href="http://testdouble.com">test double</a>.
+      Designed by <a href="https://twitter.com/pixeljanitor">Derek Briggs</a>.
