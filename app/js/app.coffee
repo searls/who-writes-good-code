@@ -77,16 +77,27 @@ calculateGrades = localStorageify (github) ->
     percentage: percentage = randomPercentage(randomWeightingsFor(github))
     letter: letterGradeFromPercentage(percentage)
 
+CODE_QUALITIES = [
+  "Thoughtfulness of Names"
+  "Expressiveness of Tests"
+  "Empathy for Maintainers"
+  "Future-proof Avoidance"
+  "Conscientious Logging"
+  "Commit Message Clarity"
+  "Dependency Restraint"
+  "Release Strategy"
+  "Coherent Versioning"
+  "Convention Adherance"
+  "Pairing — Navigation"
+  "Pairing — Driving"
+  "Expectation Management"
+  "Googling for Answers"
+  "Respectful of Others"
+]
 
 pickCriteria = ->
-  _([
-    "Thoughtfulness of Names",
-    "Expressiveness of Tests",
-    "Empathy for Maintainers",
-    "Future-proof Avoidance",
-    "Conscientious Logging",
-    "Commit Message Clarity"
-  ]).chain().shuffle().first(5).value()
+  _(CODE_QUALITIES).chain().shuffle().first(5).value()
+
 # How this works:
 # The randomPercentage function takes an array of minimum values relative to
 #   a max of 100(%). So if you return [0, 50], then two random values will be
@@ -151,5 +162,5 @@ $ ->
   renderSearch()
   handleResize()
   $('form').on('submit', -> generateReportCardFor($('[data-js-search-input]').val()))
-  $(window).on('resize', handleResize)
   $(window).on('hashchange', -> generateReportCardFor(githubQuery()))
+  $(window).on('resize', handleResize)
