@@ -1,6 +1,7 @@
 ## 1. Search stuff
 
 LOADING_DELAY = 1000
+APPROX_RESULTS_HEIGHT = 820
 
 generateReportCardFor = (github) ->
   unrenderResults()
@@ -30,8 +31,9 @@ showAndHidePlaceholder = ->
 
 handleResize = ->
   docHeight = $(window).height()
-  containerHeight = $('[data-js-app-root]').outerHeight() + 190
-  $('[data-js-app-root]').toggleClass('is-too-big', docHeight < containerHeight)
+  resultsRendered = $('[data-js-results-rendered]').length > 0
+  console.log(resultsRendered, docHeight, APPROX_RESULTS_HEIGHT)
+  $('[data-js-app-root]').toggleClass('is-too-big', resultsRendered && docHeight < APPROX_RESULTS_HEIGHT)
 
 ## 2. Results stuff
 
@@ -39,6 +41,7 @@ renderResults = ($search, github) ->
   return unless github
   $('[data-js-search-input]').blur()
   _(calculateResults(github)).tap (results) ->
+    handleResize()
     render('results', results, $search.find('[data-js-results]'))
     renderTwitterButton(github, results)
     $('[data-js-results-only]').removeClass('invisible')
@@ -48,7 +51,6 @@ renderResults = ($search, github) ->
       $('[data-js-percentage]').each (i, el) ->
         $(el).css(width: "#{results.grades[i].percentage}%")
     , 400
-    setTimeout(handleResize, LOADING_DELAY)
 
 renderTwitterButton = (github, results, container = '[data-js-twitter-button]') ->
   overallWithArticle = "#{aOrAn(results.overall)} #{results.overall}"

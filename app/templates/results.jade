@@ -1,6 +1,6 @@
 .results-container
   - for(var k in grades)
-    .line-item
+    .line-item(data-js-results-rendered)
       .line-item-title #{grades[k].name}
       .line-item-percentage
         .line-item-percentage-amount(data-js-percentage)
