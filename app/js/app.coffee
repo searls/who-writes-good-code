@@ -40,6 +40,7 @@ renderResults = ($search, github) ->
   $('[data-js-search-input]').blur()
   _(calculateResults(github)).tap (results) ->
     render('results', results, $search.find('[data-js-results]'))
+    renderTwitterButton(github, results)
     $('[data-js-results-only]').removeClass('invisible')
     $('[data-js-overall-grade-letter]').text(results.overall)
     $('[data-js-results-marker]').addClass('results-ready')
@@ -49,6 +50,15 @@ renderResults = ($search, github) ->
     , 400
     setTimeout(handleResize, LOADING_DELAY)
 
+renderTwitterButton = (github, results, container = '[data-js-twitter-button]') ->
+  overallWithArticle = "#{aOrAn(results.overall)} #{results.overall}"
+  render('twitter',
+    title: "Tell the world you're #{overallWithArticle} developer!"
+    tweet: "A website said I was #{overallWithArticle} developer when I gave it my GitHub username! How good a developer are you?"
+  , container)
+
+aOrAn = (overall) ->
+  if _(overall).first() == "A" then "an" else "a"
 
 unrenderResults = ->
   $('[data-js-results-only]').addClass('invisible')
