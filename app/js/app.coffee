@@ -58,7 +58,7 @@ renderTwitterButton = (github, results, container = '[data-js-twitter-button]') 
   , container)
 
 aOrAn = (overall) ->
-  if _(overall).first() == "A" then "an" else "a"
+  if _(['A', 'F']).include(_(overall).first()) then "an" else "a"
 
 unrenderResults = ->
   $('[data-js-results-only]').addClass('invisible')
