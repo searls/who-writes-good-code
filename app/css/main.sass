@@ -14,10 +14,12 @@ body, html
   +animation(body-fade 2.5s)
   padding: 0
     top: 50px
-    bottom: 20px
+  height: 100%
   margin: 0
   font:
     family: $primary-font
+  color: dark
+  background: #f9f9f9
 
   *
     box-sizing: border-box
@@ -65,16 +67,24 @@ body, html
   z-index: 1
   position: relative
   overflow: hidden
-  background: $white
+  +linear-gradient(white, #f9f9f9)
   border-radius: 3px
   max-height: 100px
 
   &.results-ready
     max-height: 1000px
 
+    input
+      pointer-events: none
+
+    .new-entry
+      +transition(opacity .3s 1s, transform 0s)
+      +transform(translateY(0px))
+      opacity: 1
+
     & ~ .input-border
       +animation(none)
-      +linear-gradient($dark, $white)
+      +linear-gradient($dark, #f9f9f9)
 
 form
   +transition(opacity .25s)
@@ -98,6 +108,26 @@ input[type="text"]
 
   +placeholder
     color: $dark
+
+.new-entry
+  +transition(opacity .3s, transform 0s 2s)
+  +transform(translateY(20px))
+  margin: auto
+  opacity: 0
+  height: 40px
+  background: rgba($dark, .75)
+  color: $green
+  text-align: center
+  padding: 8px 32px
+  position: relative
+  bottom: 34px
+  cursor: pointer
+  outline: none
+  display: block
+  border: 1px solid $dark
+    radius: 4px
+  font:
+    size: 16px
 
 .results-container
   padding: 32px
@@ -156,7 +186,7 @@ input[type="text"]
     radius: 50%
 
 .loading-indicator
-  +transition(top .5s)
+  +transition(transform 1s)
   +transform(translate(-50%))
   +clearfix
   width: 300px
@@ -166,10 +196,13 @@ input[type="text"]
   left: 50%
 
   &.is-loading
-    top: 2px
+    +transition(transform .5s 0s)
+    +transform(translate(-50%, 77px))
 
-    & ~ .input-content form
+    & ~ .input-content form input
       opacity: 0
+      &:focus
+        color: yellow
 
     .indicator
       +animation(indicators .5s alternate infinite)
@@ -198,7 +231,7 @@ input[type="text"]
 
 .overall-grade, .indicator
   float: left
-  +transition(opacity .7s, transform .5s)
+  +transition(opacity .7s, transform .1s)
   +size(100px)
   background: rgba($dark, .75)
   border-radius: 50%
@@ -225,6 +258,8 @@ input[type="text"]
     weight: 700
 
 footer
+  padding:
+    bottom: 20px
 
   .share-buttons
     text-align: center

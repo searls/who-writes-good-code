@@ -6,6 +6,7 @@ generateReportCardFor = (github) ->
   unrenderResults()
   window.location.hash = "##{github}"
   $('[data-js-search-input]').val(github)
+  $('[data-js-search-input]').blur()
   $('[data-js-loading-indicator]').addClass('is-loading')
   setTimeout ->
     renderResults($('[data-js-app-root]'), github)
@@ -70,6 +71,8 @@ aOrAn = (overall) ->
 unrenderResults = ->
   $('[data-js-results-only]').addClass('invisible')
   $('[data-js-results-marker]').removeClass('results-ready')
+  $('[data-js-results-only]').addClass('invisible').removeClass('is-shown')
+  $('[data-js-overall-grade-letter]').text('')
 
 calculateResults = (github) ->
   grades = calculateGrades(github)
@@ -179,5 +182,6 @@ $ ->
   renderSearch()
   handleResize()
   $('form').on('submit', -> generateReportCardFor($('[data-js-search-input]').val()))
+  $('[data-js-new-entry]').on('click', -> unrenderResults())
   $(window).on('hashchange', -> generateReportCardFor(githubQuery()))
   $(window).on('resize', handleResize)
