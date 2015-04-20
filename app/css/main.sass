@@ -11,6 +11,7 @@ $green: #7AFC31
 $white: white
 
 body, html
+  +animation(body-fade 2.5s)
   padding: 0
     top: 50px
     bottom: 20px
@@ -20,6 +21,10 @@ body, html
 
   *
     box-sizing: border-box
+
++keyframes(body-fade)
+  0%
+    opacity: 0
 
 .container
   +centerer
