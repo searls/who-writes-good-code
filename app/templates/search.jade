@@ -1,12 +1,15 @@
 .container(data-js-app-root)
   .input-container
-    .overall-grade.invisible(data-js-results-only)
-      .overall-grade-letter(data-js-overall-grade-letter)
+    .loading-indicator(data-js-loading-indicator)
+      .indicator
+      .indicator.overall-grade.invisible(data-js-results-only)
+        .overall-grade-letter(data-js-overall-grade-letter)
+      .indicator
     .input-content(data-js-results-marker)
       form
         input(type="text" name="github" value="#{github}" data-js-search-input placeholder="Github User Name" autocomplete="off" autocorrect="off" autocapitalize="off" data-js-input)
       div(data-js-results)
-    .input-border
+    .input-border(data-js-input-border)
 
   footer.invisible(data-js-results-only)
     div(data-js-twitter-button)

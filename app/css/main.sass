@@ -4,9 +4,6 @@
   +transform(translate(-50%, -50%))
   +position(absolute, 50% null null 50%)
 
-.invisible
-  opacity: 0
-
 $primary-font: 'Source Sans Pro'
 
 $dark: #231F20
@@ -16,7 +13,7 @@ $white: white
 body, html
   padding: 0
     top: 50px
-    bottom: 50px
+    bottom: 20px
   margin: 0
   font:
     family: $primary-font
@@ -29,6 +26,11 @@ body, html
   width: 90%
   max-width: 600px
 
+  @media screen and (max-width: 588px)
+    +transform(translate(0, 0))
+    position: static
+    margin: auto
+
   &.is-too-big
     +transform(translate(0, 0))
     position: static
@@ -40,11 +42,18 @@ body, html
   margin-bottom: 20px
 
 .input-border
-  +transition(background 1s)
+  +animation(background-pulse 1s alternate infinite linear)
   +position(absolute, 0 0 0 0)
-  +linear-gradient($dark, lighten($dark, 60%))
+  background: $dark
   z-index: 0
   border-radius: 4px
+
+.is-not-animating
+  +animation(none)
+
++keyframes(background-pulse)
+  0%
+    background: $green
 
 .input-content
   +transition(max-height 1s)
@@ -59,18 +68,24 @@ body, html
     max-height: 1000px
 
     & ~ .input-border
+      +animation(none)
       +linear-gradient($dark, $white)
 
 form
+  +transition(opacity .25s)
   margin-bottom: 16px
 
-input
+input[type="text"]
+  +box-sizing(border-box)
   +size(100% 98px)
   background: none
   border: none
   outline: none
   display: block
   text-align: center
+  padding:
+    top: 6px
+    bottom: 0
   font:
     family: $primary-font
     weight: 300
@@ -86,19 +101,22 @@ input
     size: 28px
     weight: 300
 
+  @media only screen and (max-width: 476px)
+    font-size:20px
+
 .line-item
   +clearfix
   position: relative
   margin:
-    bottom: 48px
+    bottom: 36px
 
   &:last-child
     margin:
       bottom: 0
 
-  @for $i from 0 through 4
-    &:nth-child(#{$i}) .line-item-percentage-amount
-      +transition-delay(#{$i * .1}s)
+  @for $i from 1 through 5
+    &:nth-child(#{$i}) .line-item-percentage .line-item-percentage-amount
+      +transition-delay(#{$i * .15}s)
 
 .line-item-title
   float: left
@@ -120,10 +138,11 @@ input
 .line-item-grade
   float: right
   text-align: center
+  line-height: 1
   padding:
-    top: 10px
+    top: 14px
   font:
-    size: 30px
+    size: 24px
     family: 'Helvetica'
 
     weight: 700
@@ -131,41 +150,92 @@ input
   border: 1px solid $dark
     radius: 50%
 
-.overall-grade
+.loading-indicator
+  +transform(translate(-50%))
+  +clearfix
+  width: 300px
   position: absolute
   z-index: 2
   top: -75px
   left: 50%
-  +transition(opacity .7s)
-  +transform(translate(-50%))
+
+  &.is-loading
+    top: 2px
+
+    & ~ .input-content form
+      opacity: 0
+
+    .indicator
+      +animation(indicators .5s alternate infinite)
+
+      @for $i from 1 through 3
+        &:nth-child(#{$i})
+          +animation-delay(#{$i * .1}s)
+
+.indicator
+  +transform(scale(.25))
+  opacity: 0
+
+  &:first-child
+    position: relative
+    left: 64px
+
+  &:last-child
+    position: relative
+    right: 64px
+
++keyframes(indicators)
+  0%
+    opacity: .1
+  100%
+    opacity: 1
+
+.overall-grade, .indicator
+  float: left
+  +transition(opacity .7s, transform .5s)
   +size(100px)
-  background: black
+  background: rgba($dark, .75)
   border-radius: 50%
+
+  &.invisible
+    opacity: 0
+
+.overall-grade
+  &.is-shown
+    +transform(scale(1))
+    +animation(none)
+    background: $dark
+    opacity: 1
 
 .overall-grade-letter
   position: relative
-  top: 16px
+  top: 25px
   color: $green
   text-align: center
+  line-height: 1
   font:
-    size: 64px
+    size: 58px
     family: 'Helvetica'
     weight: 700
 
 footer
 
   .share-buttons
+    text-align: center
+    margin:
+      bottom: 10px
+
     .title
       display: inline-block
-      margin-right: 14px
-      padding-top: 4px
+      margin:
+        right: 14px
+      padding:
+        top: 4px
       vertical-align: top
       font:
         weight: 600
         size: 18px
 
-    text-align: center
-    margin-bottom: 40px
 
 
   &.invisible
@@ -181,7 +251,3 @@ footer
 
       &:hover
         color: $green
-
-@media only screen and (max-width: 400px)
-  .results-container
-    font-size:20px

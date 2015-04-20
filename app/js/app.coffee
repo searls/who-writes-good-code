@@ -1,15 +1,16 @@
 ## 1. Search stuff
 
-LOADING_DELAY = 1000
-APPROX_RESULTS_HEIGHT = 820
+LOADING_DELAY = 2000
 
 generateReportCardFor = (github) ->
   unrenderResults()
   window.location.hash = "##{github}"
   $('[data-js-search-input]').val(github)
+  $('[data-js-loading-indicator]').addClass('is-loading')
   setTimeout ->
     renderResults($('[data-js-app-root]'), github)
-  , LOADING_DELAY + 750
+    $('[data-js-loading-indicator]').removeClass('is-loading')
+  , LOADING_DELAY
   false
 
 renderSearch = (github = githubQuery()) ->
@@ -26,14 +27,18 @@ render = (name, context, container = "[data-js-render-root]") ->
 showAndHidePlaceholder = ->
   $input = $('[data-js-input]')
   ogPlaceholder = $input.attr('placeholder')
-  $input.on 'focus', -> $input.attr('placeholder', '')
-  $input.on 'blur', -> $input.attr('placeholder', ogPlaceholder)
+  $input.on 'focus', ->
+    $input.attr('placeholder', '')
+    $('[data-js-input-border]').addClass('is-not-animating')
+  $input.on 'blur', ->
+    $input.attr('placeholder', ogPlaceholder)
+    $('[data-js-input-border]').removeClass('is-not-animating')
 
 handleResize = ->
   docHeight = $(window).height()
-  resultsRendered = $('[data-js-results-rendered]').length > 0
-  console.log(resultsRendered, docHeight, APPROX_RESULTS_HEIGHT)
-  $('[data-js-app-root]').toggleClass('is-too-big', resultsRendered && docHeight < APPROX_RESULTS_HEIGHT)
+  resultsRendered = $('[data-js-app-root]').outerHeight() + 140
+  console.log(resultsRendered, docHeight)
+  $('[data-js-app-root]').toggleClass('is-too-big', resultsRendered > docHeight)
 
 ## 2. Results stuff
 
@@ -41,15 +46,15 @@ renderResults = ($search, github) ->
   return unless github
   $('[data-js-search-input]').blur()
   _(calculateResults(github)).tap (results) ->
-    handleResize()
     render('results', results, $search.find('[data-js-results]'))
     renderTwitterButton(github, results)
-    $('[data-js-results-only]').removeClass('invisible')
+    $('[data-js-results-only]').removeClass('invisible').addClass('is-shown')
     $('[data-js-overall-grade-letter]').text(results.overall)
     $('[data-js-results-marker]').addClass('results-ready')
     setTimeout ->
       $('[data-js-percentage]').each (i, el) ->
         $(el).css(width: "#{results.grades[i].percentage}%")
+        handleResize()
     , 400
 
 renderTwitterButton = (github, results, container = '[data-js-twitter-button]') ->
