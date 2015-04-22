@@ -63,6 +63,8 @@ renderTwitterButton = (github, results, container = '[data-js-twitter-button]') 
     title: "Tell the world you're #{overallWithArticle} developer!"
     tweet: "A website said I was #{overallWithArticle} developer when I gave it my GitHub username! How good a developer are you?"
   , container)
+  $.ajax(url: 'http://platform.twitter.com/widgets.js', dataType: 'script', cache:true) #lmao if your API doesn't support renders after domready
+
 
 aOrAn = (overall) ->
   if _(['A', 'F']).include(_(overall).first()) then "an" else "a"
