@@ -75,6 +75,7 @@ unrenderResults = ->
   $('[data-js-results-marker]').removeClass('results-ready')
   $('[data-js-results-only]').addClass('invisible').removeClass('is-shown')
   $('[data-js-overall-grade-letter]').text('')
+  $('[data-js-search-input]').val('').focus()
 
 calculateResults = (github) ->
   grades = calculateGrades(github)
