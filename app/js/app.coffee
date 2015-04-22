@@ -38,7 +38,6 @@ showAndHidePlaceholder = ->
 handleResize = ->
   docHeight = $(window).height()
   resultsRendered = $('[data-js-app-root]').outerHeight() + 140
-  console.log(resultsRendered, docHeight)
   $('[data-js-app-root]').toggleClass('is-too-big', resultsRendered > docHeight)
 
 ## 2. Results stuff
