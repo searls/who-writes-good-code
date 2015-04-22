@@ -2,7 +2,7 @@
 
 LOADING_DELAY = 2000
 
-generateReportCardFor = (github) ->
+generateReportCardFor = _.debounce (github) ->
   unrenderResults()
   window.location.hash = "##{github}"
   $('[data-js-search-input]').val(github)
@@ -13,6 +13,7 @@ generateReportCardFor = (github) ->
     $('[data-js-loading-indicator]').removeClass('is-loading')
   , LOADING_DELAY
   false
+, 200, true
 
 renderSearch = (github = githubQuery()) ->
   render('search', {github})
