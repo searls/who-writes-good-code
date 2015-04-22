@@ -77,6 +77,7 @@ unrenderResults = ->
   $('[data-js-overall-grade-letter]').text('')
   $('[data-js-search-input]').val('').focus()
   setTimeout ->
+    window.scrollTo('0')
     handleResize()
   , 500
 
