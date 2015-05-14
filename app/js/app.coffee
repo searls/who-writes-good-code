@@ -176,7 +176,9 @@ A_PLUS_STUDENTS = [
   "kbaribeau"
   "danthompson"
   "crebma"
+  "kpfefferle"
   "dustintinney"
+  "JoshTGreenwood"
 ]
 
 
